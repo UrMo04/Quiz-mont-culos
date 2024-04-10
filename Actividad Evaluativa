@@ -1,41 +1,51 @@
 class Nodo:
     def  __init__(self, nombre, edad, direccion,motivo, gravedad):
+      self.izquierda = None
+      self.derecha = None
+      self.padre = None
+
       self.nombre = nombre
       self.edad = edad
       self.direccion = direccion
       self.motivo = motivo
       self.gravedad = gravedad
+     
+      if edad < 12 :
+                self.prioridad = 1 + gravedad
+      elif edad > 65:
+                self.proridad = 2 + gravedad
+      else:
+                self.prioridad = 4 + gravedad
+
+
+    
 
 class Arbol:
     # Funciones privadas
-    def __init__(self, nombre, edad, direccion,motivo, gravedad):
-        self.raiz = Nodo( nombre, edad, direccion,motivo, gravedad)
+    def __init__(self,nodo):
+        self.raiz = nodo
 
-    def __gravedad
-
-    def __agregar_recursivo(self, nodo, dato):
-        if dato < nodo.dato:
+     def __agregar_recursivo(self, nodo, nodoNuevo ):
+        if nodoNuevo.prioridad < nodo.prioridad:
             if nodo.izquierda is None:
-                nodo.izquierda = Nodo(dato)
+                nodo.izquierda = nodoNuevo
+                nodo.izquierda.padre = nodo
+                self.infiltArriba
             else:
-                self.__agregar_recursivo(nodo.izquierda, dato)
+                self.__agregar_recursivo(nodo.izquierda, nodoNuevo)
         else:
             if nodo.derecha is None:
-                nodo.derecha = Nodo(dato)
+                nodo.derecha = nodoNuevo
+                nodo.derecha.padre = nodo
             else:
-                self.__agregar_recursivo(nodo.derecha, dato)
+                self.__agregar_recursivo(nodo.derecha, nodoNueov)
+         
 
-    def __inorden_recursivo(self, nodo):
-        if nodo is not None:
-            self.__inorden_recursivo(nodo.izquierda)
-            print(nodo.dato, end=", ")
-            self.__inorden_recursivo(nodo.derecha)
-
-    def __preorden_recursivo(self, nodo):
-        if nodo is not None:
-            print(nodo.dato, end=", ")
-            self.__preorden_recursivo(nodo.izquierda)
-            self.__preorden_recursivo(nodo.derecha)
+    def infiltArriba(self, nodo):
+        while nodo.padre is not None and nodo.dato > nodo.padre.dato:
+            # Intercambiar datos con el padre
+            nodo, nodo.padre = nodo.padre, nodo
+            nodo = nodo.padre
 
     def __postorden_recursivo(self, nodo):
         if nodo is not None:
@@ -55,18 +65,11 @@ class Arbol:
 
     # Funciones públicas
 
-    def agregar(self, dato):
+    
+
+    def agregar(self,):
         self.__agregar_recursivo(self.raiz, dato)
 
-    def inorden(self):
-        print("Imprimiendo árbol inorden: ")
-        self.__inorden_recursivo(self.raiz)
-        print("")
-
-    def preorden(self):
-        print("Imprimiendo árbol preorden: ")
-        self.__preorden_recursivo(self.raiz)
-        print("")
 
     def postorden(self):
         print("Imprimiendo árbol postorden: ")
@@ -75,3 +78,5 @@ class Arbol:
 
     def buscar(self, busqueda):
         return self.__buscar(self.raiz, busqueda)
+
+
