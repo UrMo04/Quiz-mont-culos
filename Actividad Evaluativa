@@ -8,8 +8,8 @@ class Nodo:
 
 class Arbol:
     # Funciones privadas
-    def __init__(self, dato):
-        self.raiz = Nodo(dato)
+    def __init__(self, nombre, edad, direccion,motivo, gravedad):
+        self.raiz = Nodo( nombre, edad, direccion,motivo, gravedad)
 
     def __gravedad
 
