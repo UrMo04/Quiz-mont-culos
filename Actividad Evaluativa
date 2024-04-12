@@ -1,82 +1,102 @@
 class Nodo:
-    def  __init__(self, nombre, edad, direccion,motivo, gravedad):
-      self.izquierda = None
-      self.derecha = None
-      self.padre = None
+    def __init__(self, nombre, edad, direccion, motivo, gravedad):
+        self.izquierda = None
+        self.derecha = None
+        self.padre = None
 
-      self.nombre = nombre
-      self.edad = edad
-      self.direccion = direccion
-      self.motivo = motivo
-      self.gravedad = gravedad
-     
-      if edad < 12 :
-                self.prioridad = 1 + gravedad
-      elif edad > 65:
-                self.proridad = 2 + gravedad
-      else:
-                self.prioridad = 4 + gravedad
+        self.nombre = nombre
+        self.edad = edad
+        self.direccion = direccion
+        self.motivo = motivo
+        self.gravedad = gravedad
 
+        if edad < 12:
+            self.prioridad = 1 + gravedad
+        elif edad >= 65:
+            self.prioridad = 2 + gravedad
+        else:
+            self.prioridad = 4 + gravedad
 
-    
 
 class Arbol:
-    # Funciones privadas
-    def __init__(self,nodo):
-        self.raiz = nodo
+    def __init__(self):
+        self.listallamadas = []
 
-     def __agregar_recursivo(self, nodo, nodoNuevo ):
-        if nodoNuevo.prioridad < nodo.prioridad:
-            if nodo.izquierda is None:
-                nodo.izquierda = nodoNuevo
-                nodo.izquierda.padre = nodo
-                self.infiltArriba
-            else:
-                self.__agregar_recursivo(nodo.izquierda, nodoNuevo)
+    def insertar(self, llamada):
+        self.listallamadas.append(llamada)
+        self.listallamadas.sort(key=lambda x: x.prioridad)
+
+    def eliminarMin(self):
+        return self.listallamadas.pop(0)
+
+    def esta_vacio(self):
+        return len(self.listallamadas) == 0
+
+    def mostrar_cola(self):
+        if not self.listallamadas:
+            print("\nNo hay llamadas en espera.")
         else:
-            if nodo.derecha is None:
-                nodo.derecha = nodoNuevo
-                nodo.derecha.padre = nodo
-            else:
-                self.__agregar_recursivo(nodo.derecha, nodoNueov)
-         
+            print("\nCola de atención:")
+            i = 1
+            for llamada in self.listallamadas:
+                print(f" {i}. Nombre: {llamada.nombre}, Edad: {llamada.edad}, Dirección: {llamada.direccion}, Motivo: {llamada.motivo}, Gravedad: {llamada.gravedad}, Prioridad: {llamada.prioridad}")
+                i = i+1
 
-    def infiltArriba(self, nodo):
-        while nodo.padre is not None and nodo.dato > nodo.padre.dato:
-            # Intercambiar datos con el padre
-            nodo, nodo.padre = nodo.padre, nodo
-            nodo = nodo.padre
 
-    def __postorden_recursivo(self, nodo):
-        if nodo is not None:
-            self.__postorden_recursivo(nodo.izquierda)
-            self.__postorden_recursivo(nodo.derecha)
-            print(nodo.dato, end=", ")
+monticulo = Arbol()
 
-    def __buscar(self, nodo, busqueda):
-        if nodo is None:
-            return None
-        if nodo.dato == busqueda:
-            return nodo
-        if busqueda < nodo.dato:
-            return self.__buscar(nodo.izquierda, busqueda)
+while True:
+    print("\nMenú:")
+    print("1. Ingresar Llamada")
+    print("2. Pasar siguiente solicitud")
+    print("3. Mostrar cola")
+    print("4. Salir")
+    opcion = input("Ingrese su opción: ")
+
+    if opcion == "1":
+
+       
+        nombre = input("\nIngrese el nombre completo: ")
+        
+        while True:
+            try:
+                edad = int(input("Ingrese la edad: "))
+                break  
+            except ValueError:
+                print("Error: Por favor, ingrese un valor entero válido.")
+          
+        direccion = input("Ingrese la dirección: ")
+           
+        motivo = input("Ingrese el motivo de la llamada: ")
+
+        while True:
+            try:
+                gravedad = int(input("Ingrese la gravedad (1-5): "))
+                break 
+            except ValueError:
+                print("Error: Por favor, ingrese un valor entero válido.")   
+       
+           
+        llamada = Nodo(nombre, edad, direccion, motivo, gravedad)
+        monticulo.insertar(llamada)
+        posicion_llamada = monticulo.listallamadas.index(llamada) + 1
+        print("\nLlamada ingresada con éxito. \nSu turno para ser atentido es: " + str(posicion_llamada)  )
+
+    elif opcion == "2":
+        if not monticulo.esta_vacio():
+            solicitud = monticulo.eliminarMin()
+            print("\nSiguiente solicitud a atender:")
+            print(f"Nombre: {solicitud.nombre}, Edad: {solicitud.edad}, Dirección: {solicitud.direccion}, Motivo: {solicitud.motivo}, Gravedad: {solicitud.gravedad}, Prioridad: {solicitud.prioridad}")
         else:
-            return self.__buscar(nodo.derecha, busqueda)
+            print("\nNo hay más solicitudes en espera.")
 
-    # Funciones públicas
+    elif opcion == "3":
+        monticulo.mostrar_cola()
 
-    
+    elif opcion == "4":
+        print("\nSaliendo del programa...")
+        break
 
-    def agregar(self,):
-        self.__agregar_recursivo(self.raiz, dato)
-
-
-    def postorden(self):
-        print("Imprimiendo árbol postorden: ")
-        self.__postorden_recursivo(self.raiz)
-        print("")
-
-    def buscar(self, busqueda):
-        return self.__buscar(self.raiz, busqueda)
-
+    else:
+        print("\nOpción no válida. Por favor, ingrese un número del 1 al 4.")
 
