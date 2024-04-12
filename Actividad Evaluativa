@@ -1,9 +1,6 @@
 class Nodo:
     def __init__(self, nombre, edad, direccion, motivo, gravedad):
-        self.izquierda = None
-        self.derecha = None
-        self.padre = None
-
+        
         self.nombre = nombre
         self.edad = edad
         self.direccion = direccion
@@ -18,7 +15,7 @@ class Nodo:
             self.prioridad = 4 + gravedad
 
 
-class Arbol:
+class Monticulo:
     def __init__(self):
         self.listallamadas = []
 
@@ -43,7 +40,7 @@ class Arbol:
                 i = i+1
 
 
-monticulo = Arbol()
+monticulo = Monticulo()
 
 while True:
     print("\nMenú:")
