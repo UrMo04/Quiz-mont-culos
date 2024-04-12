@@ -1,6 +1,6 @@
 # Quiz-mont-culos
 
-uriel Muñoz 2230046
+Uriel Muñoz 2230046
 Sofía Vega 2230041
 
 El programa fue realizado para el sistema de asignación de prioridad de atención de una unidad de emergencia de la policía. La estructura de datos a utilizar fue un árbol binario en su forma de montículo simulando el Comportamiento de una cola de prioridad. 
